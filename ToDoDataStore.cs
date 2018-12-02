@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ToDoApp.Models;
 
+// this is a dummy store for local in-memory only
+// Just for testing API before database integration
 namespace ToDoApp
 {
     public class ToDoDataStore
