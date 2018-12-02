@@ -28,25 +28,50 @@ namespace ToDoApp.Controllers
             {
                 return NotFound();
             }
+
             return Ok(toDoToReturn);
         }
 
-        // POST
+        // POST api/todos
         [HttpPost]
-        public IActionResult CreateToDo(int toDoId, [FromBody] ToDoDto toDo)
+        public IActionResult CreateToDo(int id, [FromBody] ToDoDto toDo)
         {
             if (toDo == null)
             {
                 return BadRequest();
             }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             ToDoDataStore.Current.ToDos.Add(toDo);
-
             return StatusCode(201);
+        }
+
+        // PUT
+        [HttpPut("{id}")]
+        public IActionResult UpdateToDo(int id, [FromBody] ToDoDto toDo)
+        {
+            if (toDo == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var toDoFromStore = ToDoDataStore.Current.ToDos.FirstOrDefault(t => t.Id == id);
+            if (toDoFromStore == null)
+            {
+                return NotFound();
+            }
+
+            toDoFromStore.Task = toDo.Task;
+            return NoContent();
         }
 
 
