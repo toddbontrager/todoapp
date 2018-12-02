@@ -39,6 +39,10 @@ namespace ToDoApp.Controllers
             {
                 return BadRequest();
             }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             ToDoDataStore.Current.ToDos.Add(toDo);
 
