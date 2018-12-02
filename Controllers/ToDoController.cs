@@ -7,14 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ToDoApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/todos")]
     
     public class ToDoController : Controller
     {
         // GET api/todos
-        [HttpGet]
-        public IActionResult GetTodos()
-            return Ok()
+        [HttpGet()]
+        public JsonResult GetTodos()
+        {
+            return new JsonResult(ToDoDataStore.Current.ToDos);
+        }
 
         // GET api/todos/3
     }
