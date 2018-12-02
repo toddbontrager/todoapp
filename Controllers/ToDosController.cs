@@ -13,16 +13,21 @@ namespace ToDoApp.Controllers
     {
         // GET api/todos
         [HttpGet]
-        public JsonResult GetTodos()
+        public IActionResult GetTodos()
         {
-            return new JsonResult(ToDoDataStore.Current.ToDos);
+            return Ok(ToDoDataStore.Current.ToDos);
         }
 
         // GET api/todos/2
         [HttpGet("{id}")]
-        public JsonResult GetToDo(int id)
+        public IActionResult GetToDo(int id)
         {
-            return new JsonResult(ToDoDataStore.Current.ToDos.FirstOrDefault(t => t.Id == id));
+            var toDoToReturn = ToDoDataStore.Current.ToDos.FirstOrDefault(t => t.Id == id);
+            if (toDoToReturn == null)
+            {
+                return NotFound();
+            }
+            return Ok(toDoToReturn);
         }
 
 
