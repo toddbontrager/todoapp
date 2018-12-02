@@ -26,6 +26,9 @@ namespace ToDoApp
                 app.UseDeveloperExceptionPage();
             }
 
+            // to see status code pages in web browser
+            app.UseStatusCodePages();
+
             app.UseMvc();
         }
     }
