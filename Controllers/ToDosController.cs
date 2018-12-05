@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ToDoApp.Models;
+using ToDoApp.Services;
 
 namespace ToDoApp.Controllers
 {
@@ -12,24 +13,44 @@ namespace ToDoApp.Controllers
     [Route("api/[controller]")]
     public class ToDosController : Controller
     {
+        private IToDoRepository _toDoRepository;
+
+        public ToDosController(IToDoRepository toDoRepository)
+        {
+            _toDoRepository = toDoRepository;
+        }
+
         // GET api/todos
         [HttpGet]
         public IActionResult GetTodos()
         {
-            return Ok(ToDoDataStore.Current.ToDos);
+            // return Ok(ToDoDataStore.Current.ToDos);
+            var toDoEntities = _toDoRepository.GetToDos();
+            var results = new List<ToDoDto>();
+
+            foreach (var toDoEntity in toDoEntities)
+            {
+                results.Add(new ToDoDto
+                {
+                    Id = toDoEntity.Id,
+                    Task = toDoEntity.Task
+                });
+            }
+            return Ok(results);
         }
 
         // GET api/todos/2
         [HttpGet("{id}")]
         public IActionResult GetToDo(int id)
         {
-            var toDoToReturn = ToDoDataStore.Current.ToDos.FirstOrDefault(t => t.Id == id);
-            if (toDoToReturn == null)
-            {
-                return NotFound();
-            }
+            var toDoToReturn = _toDoRepository.GetToDo(id);
 
-            return Ok(toDoToReturn);
+            if (toDoToReturn == null)
+             {
+                 return NotFound();
+             }
+
+             return Ok(toDoToReturn);
         }
 
         // POST api/todos
