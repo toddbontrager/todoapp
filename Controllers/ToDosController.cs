@@ -74,7 +74,18 @@ namespace ToDoApp.Controllers
             return NoContent();
         }
 
-
         // DELETE
+        [HttpDelete("{id}")]
+        public IActionResult DeleteToDo(int id)
+        {
+            var toDoFromStore = ToDoDataStore.Current.ToDos.FirstOrDefault(t => t.Id == id);
+            if (toDoFromStore == null)
+            {
+                return NotFound();
+            }
+
+            ToDoDataStore.Current.ToDos.Remove(toDoFromStore);
+            return NoContent();
+        }
     }
 }
