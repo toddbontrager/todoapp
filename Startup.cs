@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using ToDoApp.Entities;
+using ToDoApp.Services;
 
 namespace ToDoApp
 {
@@ -33,6 +34,8 @@ namespace ToDoApp
 
             var connectionString = Startup.Configuration["connectionStrings:toDoDBConnectionString"];
             services.AddDbContext<ToDoContext>(o => o.UseSqlServer(connectionString));
+
+            services.AddScoped<IToDoRepository, ToDoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
