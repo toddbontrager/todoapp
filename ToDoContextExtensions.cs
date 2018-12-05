@@ -25,6 +25,10 @@ namespace ToDoApp
                 new ToDo()
                 {
                     Task = "Rake leaves"
+                },
+                new ToDo()
+                {
+                    Task = "Paint house"
                 }
             };
 
