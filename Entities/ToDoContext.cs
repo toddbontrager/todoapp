@@ -10,7 +10,7 @@ namespace ToDoApp.Entities
     {
         public ToDoContext(DbContextOptions<ToDoContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            Database.Migrate();
         }
         public DbSet<ToDo> ToDos { get; set; }
     }
