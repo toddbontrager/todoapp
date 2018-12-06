@@ -105,13 +105,19 @@ namespace ToDoApp.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteToDo(int id)
         {
-            var toDoFromStore = ToDoDataStore.Current.ToDos.FirstOrDefault(t => t.Id == id);
-            if (toDoFromStore == null)
+            var result = _toDoRepository.GetToDo(id);
+            if (result == null)
             {
                 return NotFound();
             }
 
-            ToDoDataStore.Current.ToDos.Remove(toDoFromStore);
+            _toDoRepository.DeleteToDo(id);
+
+            if (!_toDoRepository.Save())
+            {
+                return StatusCode(500, "A problem happened while handling your request.");
+            }
+
             return NoContent();
         }
     }

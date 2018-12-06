@@ -35,11 +35,9 @@ namespace ToDoApp.Services
             return (_context.SaveChanges() >= 0);
         }
 
-        public bool ToDoExists(int id)
+        public void DeleteToDo(int id)
         {
-            return _context.ToDos.Any(t => t.Id == id);
+            _context.Remove(GetToDo(id));
         }
-
-        // public void DeleteToDo()
     }
 }

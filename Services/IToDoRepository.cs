@@ -12,6 +12,6 @@ namespace ToDoApp.Services
         ToDo GetToDo(int id);
         void AddToDo(ToDo toDo);
         bool Save();
-        bool ToDoExists(int id);
+        void DeleteToDo(int id);
     }
 }
