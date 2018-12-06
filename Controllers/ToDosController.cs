@@ -25,8 +25,6 @@ namespace ToDoApp.Controllers
         [HttpGet]
         public IActionResult GetTodos()
         {
-            // uncomment below when usting in memory storage instead of a db
-            // return Ok(ToDoDataStore.Current.ToDos);
             var toDoEntities = _toDoRepository.GetToDos();
             var results = Mapper.Map<IEnumerable<ToDoDto>>(toDoEntities);            
             return Ok(results);
