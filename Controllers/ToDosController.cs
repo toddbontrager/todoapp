@@ -71,7 +71,7 @@ namespace ToDoApp.Controllers
             return CreatedAtRoute("GetToDo", new { id = createdToDoToReturn.Id }, createdToDoToReturn);
         }
 
-        // PUT
+        // PUT api/todos/2
         [HttpPut("{id}")]
         public IActionResult UpdateToDo(int id, [FromBody] ToDoDto toDo)
         {
@@ -85,13 +85,19 @@ namespace ToDoApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            var toDoFromStore = ToDoDataStore.Current.ToDos.FirstOrDefault(t => t.Id == id);
-            if (toDoFromStore == null)
+            var result = _toDoRepository.GetToDo(id);
+            if (result == null)
             {
                 return NotFound();
             }
 
-            toDoFromStore.Task = toDo.Task;
+            Mapper.Map(toDo, result);
+
+            if (!_toDoRepository.Save())
+            {
+                return StatusCode(500, "A problem happened while handling your request.");
+            }
+
             return NoContent();
         }
 
