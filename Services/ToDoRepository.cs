@@ -30,6 +30,11 @@ namespace ToDoApp.Services
             _context.ToDos.Add(toDo);
         }
 
+        public bool Save()
+        {
+            return (_context.SaveChanges() >= 0);
+        }
+
         // public void DeleteToDo()
     }
 }

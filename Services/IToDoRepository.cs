@@ -11,5 +11,6 @@ namespace ToDoApp.Services
         IEnumerable<ToDo> GetToDos();
         ToDo GetToDo(int id);
         void AddToDo(ToDo toDo);
+        bool Save();
     }
 }

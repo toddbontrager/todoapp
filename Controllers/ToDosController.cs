@@ -31,7 +31,7 @@ namespace ToDoApp.Controllers
         }
 
         // GET api/todos/2
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name ="GetToDo")]
         public IActionResult GetToDo(int id)
         {
             var result = _toDoRepository.GetToDo(id);
@@ -59,10 +59,16 @@ namespace ToDoApp.Controllers
             }
 
             var mapped = Mapper.Map<Entities.ToDo>(toDo);
-
             _toDoRepository.AddToDo(mapped);
 
-            return StatusCode(201);
+            if (!_toDoRepository.Save())
+            {
+                return StatusCode(500, "A problem happened while handling your request.");
+            }
+
+            var createdToDoToReturn = Mapper.Map<ToDoDto>(mapped);
+
+            return CreatedAtRoute("GetToDo", new { id = createdToDoToReturn.Id }, createdToDoToReturn);
         }
 
         // PUT
