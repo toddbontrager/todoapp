@@ -9,3 +9,4 @@ bin/
 obj/
 wwwroot/
 Dependencies/
+Migrations/
