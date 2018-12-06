@@ -34,19 +34,19 @@ namespace ToDoApp.Controllers
         [HttpGet("{id}")]
         public IActionResult GetToDo(int id)
         {
-            var toDoToReturn = _toDoRepository.GetToDo(id);
+            var result = _toDoRepository.GetToDo(id);
 
-            if (toDoToReturn == null)
+            if (result == null)
              {
                  return NotFound();
              }
 
-             return Ok(toDoToReturn);
+             return Ok(result);
         }
 
         // POST api/todos
         [HttpPost]
-        public IActionResult CreateToDo(int id, [FromBody] ToDoDto toDo)
+        public IActionResult CreateToDo([FromBody] ToDoDto toDo)
         {
             if (toDo == null)
             {
@@ -58,7 +58,10 @@ namespace ToDoApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            ToDoDataStore.Current.ToDos.Add(toDo);
+            var mapped = Mapper.Map<Entities.ToDo>(toDo);
+
+            _toDoRepository.AddToDo(mapped);
+
             return StatusCode(201);
         }
 

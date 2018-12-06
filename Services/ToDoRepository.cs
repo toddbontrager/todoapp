@@ -24,5 +24,12 @@ namespace ToDoApp.Services
         {
             return _context.ToDos.Where(t => t.Id == id).FirstOrDefault();
         }
+
+        public void AddToDo(ToDo toDo)
+        {
+            _context.ToDos.Add(toDo);
+        }
+
+        // public void DeleteToDo()
     }
 }
