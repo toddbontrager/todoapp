@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ToDoApp.Models;
@@ -24,18 +25,10 @@ namespace ToDoApp.Controllers
         [HttpGet]
         public IActionResult GetTodos()
         {
+            // uncomment below when usting in memory storage instead of a db
             // return Ok(ToDoDataStore.Current.ToDos);
             var toDoEntities = _toDoRepository.GetToDos();
-            var results = new List<ToDoDto>();
-
-            foreach (var toDoEntity in toDoEntities)
-            {
-                results.Add(new ToDoDto
-                {
-                    Id = toDoEntity.Id,
-                    Task = toDoEntity.Task
-                });
-            }
+            var results = Mapper.Map<IEnumerable<ToDoDto>>(toDoEntities);            
             return Ok(results);
         }
 

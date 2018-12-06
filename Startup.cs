@@ -52,6 +52,10 @@ namespace ToDoApp
             // to see status code pages in web browser
             app.UseStatusCodePages();
 
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Entities.ToDo, Models.ToDoDto>();
+            });
             app.UseMvc();
         }
     }
