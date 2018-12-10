@@ -14,5 +14,8 @@ namespace ToDoApp.Models
         [Required]
         [MaxLength(200)]
         public string Task { get; set; }
+
+        [Required]
+        public bool Completed { get; set; }
     }
 }

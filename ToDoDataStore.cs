@@ -21,12 +21,14 @@ namespace ToDoApp
                 new ToDoDto()
                 {
                     Id = 1,
-                    Task = "Mow lawn"
+                    Task = "Mow lawn",
+                    Completed = true
                 },
                 new ToDoDto()
                 {
                     Id = 2,
-                    Task = "Clean garage"
+                    Task = "Clean garage",
+                    Completed = false
                 }
             };
         }
