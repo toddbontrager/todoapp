@@ -24,6 +24,8 @@ namespace ToDoApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Completed");
+
                     b.Property<string>("Task")
                         .IsRequired()
                         .HasMaxLength(200);
