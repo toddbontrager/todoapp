@@ -24,7 +24,7 @@ namespace ToDoApp.Controllers
         }
 
         // GET api/todos
-        [HttpGet, Authorize]
+        [HttpGet]
         public IActionResult GetTodos()
         {
             var toDoEntities = _toDoRepository.GetToDos();
