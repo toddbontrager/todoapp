@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using ToDoApp.Models;
 using ToDoApp.Services;
 
@@ -22,7 +24,7 @@ namespace ToDoApp.Controllers
         }
 
         // GET api/todos
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult GetTodos()
         {
             var toDoEntities = _toDoRepository.GetToDos();
