@@ -58,6 +58,7 @@ namespace ToDoApp
             services.AddDbContext<ToDoContext>(o => o.UseSqlServer(connectionString));
 
             services.AddScoped<IToDoRepository, ToDoRepository>();
+            services.AddScoped<IAuthentication, Authentication>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
