@@ -17,5 +17,8 @@ namespace ToDoApp.Models
 
         [Required]
         public bool Completed { get; set; }
+
+        [Required]
+        public bool SuitableForChild { get; set; }
     }
 }

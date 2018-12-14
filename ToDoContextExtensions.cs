@@ -21,17 +21,20 @@ namespace ToDoApp
                 new ToDo()
                 {
                     Task = "Wash car",
-                    Completed = false
+                    Completed = false,
+                    SuitableForChild = true
                 },
                 new ToDo()
                 {
                     Task = "Rake leaves",
-                    Completed = true
+                    Completed = true,
+                    SuitableForChild = true
                 },
                 new ToDo()
                 {
                     Task = "Paint house",
-                    Completed = false
+                    Completed = false,
+                    SuitableForChild = false
                 }
             };
 
