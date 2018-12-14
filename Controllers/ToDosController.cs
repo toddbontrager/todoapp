@@ -27,8 +27,24 @@ namespace ToDoApp.Controllers
         [HttpGet, Authorize]
         public IActionResult GetTodos()
         {
+            var currentUser = HttpContext.User;
+            int userAge = 0;
+
             var toDoEntities = _toDoRepository.GetToDos();
-            var results = Mapper.Map<IEnumerable<ToDoDto>>(toDoEntities);            
+            var results = Mapper.Map<IEnumerable<ToDoDto>>(toDoEntities);
+
+            // TODO: Refactor into a service
+            if (currentUser.HasClaim(c => c.Type == ClaimTypes.DateOfBirth))
+            {
+                DateTime birthDate = DateTime.Parse(currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.DateOfBirth).Value);
+                userAge = DateTime.Today.Year - birthDate.Year;
+            }          
+
+            if (userAge < 14)
+            {
+                results = results.Where(t => t.SuitableForChild).ToArray();
+            }
+
             return Ok(results);
         }
 

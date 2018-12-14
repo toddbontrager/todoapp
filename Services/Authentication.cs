@@ -29,7 +29,8 @@ namespace ToDoApp.Services
                 user = new UserDto
                 {
                     Name = "Todd B",
-                    Email = "test@gmail.com"
+                    Email = "test@gmail.com",
+                    Birthdate = new DateTime(1980,1,1)
                 };
             }
 
