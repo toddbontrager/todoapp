@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,28 +16,23 @@ namespace ToDoApp.Controllers
     public class ToDosController : Controller
     {
         private IToDoRepository _toDoRepository;
+        private IAuthentication _authentication;
 
-        public ToDosController(IToDoRepository toDoRepository)
+        public ToDosController(IToDoRepository toDoRepository, IAuthentication authentication)
         {
             _toDoRepository = toDoRepository;
+            _authentication = authentication;
         }
 
         // GET api/todos
         [HttpGet, Authorize]
         public IActionResult GetTodos()
         {
-            var currentUser = HttpContext.User;
-            int userAge = 0;
-
             var toDoEntities = _toDoRepository.GetToDos();
             var results = Mapper.Map<IEnumerable<ToDoDto>>(toDoEntities);
 
-            // TODO: Refactor into a service
-            if (currentUser.HasClaim(c => c.Type == ClaimTypes.DateOfBirth))
-            {
-                DateTime birthDate = DateTime.Parse(currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.DateOfBirth).Value);
-                userAge = DateTime.Today.Year - birthDate.Year;
-            }          
+            var currentUser = HttpContext.User;
+            int userAge = _authentication.FindUserAge(currentUser); 
 
             if (userAge < 14)
             {
@@ -46,7 +40,7 @@ namespace ToDoApp.Controllers
             }
 
             return Ok(results);
-        }
+        }        
 
         // GET api/todos/2
         [HttpGet("{id}", Name ="GetToDo")]

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ToDoApp.Models;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
-using System.Security.Claims;
+using ToDoApp.Models;
 
 namespace ToDoApp.Services
 {
@@ -57,6 +57,26 @@ namespace ToDoApp.Services
             signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public int FindUserAge(ClaimsPrincipal currentUser)
+        {
+            var userAge = 0;
+            if (UserHasClaim(currentUser))
+            {
+                DateTime birthDate = DateTime.Parse(currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.DateOfBirth).Value);
+                userAge = DateTime.Today.Year - birthDate.Year;
+            }
+            return userAge;
+        }
+
+        private bool UserHasClaim(ClaimsPrincipal currentUser)
+        {
+            if (currentUser.HasClaim(c => c.Type == ClaimTypes.DateOfBirth))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
