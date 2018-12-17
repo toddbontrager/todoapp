@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using ToDoApp.Models;
 using ToDoApp.Repository;
+using ToDoApp.Services;
 
 namespace ToDoApp.Controllers
 {
@@ -48,18 +49,9 @@ namespace ToDoApp.Controllers
 
         // POST api/todos
         [HttpPost]
+        [ServiceFilter(typeof(RequestBodyFilter))]
         public IActionResult CreateToDo([FromBody] ToDoDto toDo)
         {
-            if (toDo == null)
-            {
-                return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var mapped = Mapper.Map<Entities.ToDo>(toDo);
             _toDoRepository.AddToDo(mapped);
 
