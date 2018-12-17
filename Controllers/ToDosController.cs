@@ -40,9 +40,9 @@ namespace ToDoApp.Controllers
             var result = _toDoRepository.GetToDo(id);
 
             if (result == null)
-             {
+            {
                  return NotFound();
-             }
+            }
 
              return Ok(result);
         }
@@ -67,18 +67,9 @@ namespace ToDoApp.Controllers
 
         // PUT api/todos/2
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(RequestBodyFilter))]
         public IActionResult UpdateToDo(int id, [FromBody] ToDoDto toDo)
         {
-            if (toDo == null)
-            {
-                return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var result = _toDoRepository.GetToDo(id);
             if (result == null)
             {
