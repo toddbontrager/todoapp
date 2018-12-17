@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ToDoApp.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ToDoApp.Services
+namespace ToDoApp.Repository
 {
     public class ToDoRepository : IToDoRepository
     {

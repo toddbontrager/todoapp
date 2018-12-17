@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ToDoApp.Entities;
 
-namespace ToDoApp.Services
+namespace ToDoApp.Repository
 {
     public interface IToDoRepository
     {
