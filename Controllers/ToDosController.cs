@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using ToDoApp.Models;
+using ToDoApp.Repository;
 using ToDoApp.Services;
 
 namespace ToDoApp.Controllers
@@ -34,32 +35,18 @@ namespace ToDoApp.Controllers
 
         // GET api/todos/2
         [HttpGet("{id}", Name ="GetToDo")]
+        [ServiceFilter(typeof(ValidateEntityExistsFilter))]
         public IActionResult GetToDo(int id)
         {
             var result = _toDoRepository.GetToDo(id);
-
-            if (result == null)
-             {
-                 return NotFound();
-             }
-
-             return Ok(result);
+            return Ok(result);
         }
 
         // POST api/todos
         [HttpPost]
+        [ServiceFilter(typeof(ValidateRequestBodyFilter))]
         public IActionResult CreateToDo([FromBody] ToDoDto toDo)
         {
-            if (toDo == null)
-            {
-                return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var mapped = Mapper.Map<Entities.ToDo>(toDo);
             _toDoRepository.AddToDo(mapped);
 
@@ -75,24 +62,11 @@ namespace ToDoApp.Controllers
 
         // PUT api/todos/2
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidateRequestBodyFilter))]
+        [ServiceFilter(typeof(ValidateEntityExistsFilter))]
         public IActionResult UpdateToDo(int id, [FromBody] ToDoDto toDo)
         {
-            if (toDo == null)
-            {
-                return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var result = _toDoRepository.GetToDo(id);
-            if (result == null)
-            {
-                return NotFound();
-            }
-
             Mapper.Map(toDo, result);
 
             if (!_toDoRepository.Save())
@@ -105,13 +79,10 @@ namespace ToDoApp.Controllers
 
         // DELETE
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(ValidateEntityExistsFilter))]
         public IActionResult DeleteToDo(int id)
         {
             var result = _toDoRepository.GetToDo(id);
-            if (result == null)
-            {
-                return NotFound();
-            }
 
             _toDoRepository.DeleteToDo(id);
 
