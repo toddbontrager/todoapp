@@ -8,7 +8,7 @@ using ToDoApp.Models;
 
 namespace ToDoApp.Services
 {
-    public class RequestBodyFilter : IActionFilter
+    public class ValidateRequestBodyFilter : IActionFilter
     {
         public void OnActionExecuting(ActionExecutingContext context)
         {
