@@ -49,7 +49,8 @@ namespace ToDoApp
                         };
                 });
 
-            services.AddScoped<RequestBodyFilter>();
+            services.AddScoped<ValidateRequestBodyFilter>();
+            services.AddScoped<ValidateEntityExistsFilter>();
 
             services.AddMvc()
                 // adds the option of allowing xml as return type
