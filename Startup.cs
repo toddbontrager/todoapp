@@ -16,7 +16,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ToDoApp.Entities;
 using ToDoApp.Repository;
-using ToDoApp.Services;
+using ToDoApp.Validators;
 
 
 namespace ToDoApp

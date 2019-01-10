@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using ToDoApp.Entities;
 using ToDoApp.Repository;
 
-namespace ToDoApp.Services
+namespace ToDoApp.Validators
 {
     public class ValidateEntityExistsFilter : IActionFilter
     {
