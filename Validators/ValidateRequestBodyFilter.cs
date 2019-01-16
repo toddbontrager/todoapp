@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ToDoApp.Models;
 
-namespace ToDoApp.Services
+namespace ToDoApp.Validators
 {
     public class ValidateRequestBodyFilter : IActionFilter
     {

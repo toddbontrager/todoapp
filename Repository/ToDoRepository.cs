@@ -13,7 +13,7 @@ namespace ToDoApp.Repository
         public ToDoRepository(ToDoContext context)
         {
             _context = context;
-        }        
+        }     
 
         public IEnumerable<ToDo> GetToDos()
         {
