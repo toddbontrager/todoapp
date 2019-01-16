@@ -38,7 +38,7 @@ namespace ToDoApp.Services
 
             if (!_toDoRepository.Save())
             {
-            throw new NotSavedException(500, "A problem happened while handling your request.");
+                throw new NotSavedException(500, "A problem happened while handling your request.");
             }
 
             var createdToDoToReturn = Mapper.Map<ToDoDto>(mapped);
