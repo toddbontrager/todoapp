@@ -17,7 +17,8 @@ using Microsoft.IdentityModel.Tokens;
 using ToDoApp.Entities;
 using ToDoApp.Repository;
 using ToDoApp.Validators;
-
+using ToDoApp.Services;
+using ToDoApp.Middleware;
 
 namespace ToDoApp
 {
@@ -61,6 +62,7 @@ namespace ToDoApp
             services.AddDbContext<ToDoContext>(o => o.UseSqlServer(connectionString));
 
             services.AddScoped<IToDoRepository, ToDoRepository>();
+            services.AddScoped<IToDoService, ToDoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,6 +87,7 @@ namespace ToDoApp
             app.UseAuthentication();
 
             // add custom pipeline here
+            app.UseMiddleware(typeof(NotSavedExceptionMiddleware));
            
             app.UseMvc();
         }
