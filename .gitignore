@@ -4,6 +4,7 @@
 *.userosscache
 *.sln.docstates
 .DS_Store
+*.txt
 
 bin/
 obj/
