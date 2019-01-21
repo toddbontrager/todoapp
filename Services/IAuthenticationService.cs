@@ -6,7 +6,7 @@ using ToDoApp.Models;
 
 namespace ToDoApp.Services
 {
-    public interface IAuthentication
+    public interface IAuthenticationService
     {
         UserDto Authenticate(LoginDto login);
         string BuildToken(UserDto user);

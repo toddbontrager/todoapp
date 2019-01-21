@@ -11,11 +11,11 @@ using ToDoApp.Models;
 
 namespace ToDoApp.Services
 {
-    public class Authentication : IAuthentication
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly IConfiguration _config;
 
-        public Authentication(IConfiguration config)
+        public AuthenticationService(IConfiguration config)
         {
             _config = config;
         }
