@@ -18,12 +18,10 @@ namespace ToDoApp.Controllers
     [Route("api/[controller]")]
     public class ToDosController : Controller
     {
-        private IToDoRepository _toDoRepository;
         private IToDoService _toDoService;
 
-        public ToDosController(IToDoRepository toDoRepository, IToDoService toDoService)
+        public ToDosController(IToDoService toDoService)
         {
-            _toDoRepository = toDoRepository;
             _toDoService = toDoService;
         }
 
