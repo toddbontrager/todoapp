@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Security.Claims;
-using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using ToDoApp.Models;
-using ToDoApp.Repository;
 using ToDoApp.Validators;
 using ToDoApp.Services;
 
@@ -29,7 +26,7 @@ namespace ToDoApp.Controllers
         [HttpGet, Authorize]
         public IActionResult GetTodos()
         {
-           var toDos = _toDoService.GetAllToDos();        
+           var toDos = _toDoService.GetAllToDos(HttpContext);        
            return Ok(toDos);
         }
 
