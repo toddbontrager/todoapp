@@ -4,5 +4,5 @@ If you are on the "authorization" branch, send a POST request to http://localhos
 
 The response will contain a token. Copy the value of this token and place in the header of the GET request: 
 
-Key: Authorization
+Key: Authorization,
 Value: Bearer [token]
