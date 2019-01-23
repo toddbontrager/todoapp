@@ -4,13 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using ToDoApp.Entities;
 using ToDoApp.Models;
-using ToDoApp.Repository;
+using Microsoft.AspNetCore.Http;
 
 namespace ToDoApp.Services
 {
     public interface IToDoService
     {
-        IEnumerable<ToDoDto> GetAllToDos();
+        IEnumerable<ToDoDto> GetAllToDos(HttpContext context);
         ToDo GetToDoById(int id);
         ToDoDto CreateToDo(ToDoDto toDo);
         void UpdateToDo(int id, ToDoDto toDo);

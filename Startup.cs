@@ -63,6 +63,7 @@ namespace ToDoApp
 
             services.AddScoped<IToDoRepository, ToDoRepository>();
             services.AddScoped<IToDoService, ToDoService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

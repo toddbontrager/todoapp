@@ -26,6 +26,8 @@ namespace ToDoApp.Migrations
 
                     b.Property<bool>("Completed");
 
+                    b.Property<bool>("SuitableForChild");
+
                     b.Property<string>("Task")
                         .IsRequired()
                         .HasMaxLength(200);

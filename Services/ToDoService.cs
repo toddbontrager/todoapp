@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 using AutoMapper;
 using ToDoApp.Models;
 using ToDoApp.Entities;
 using ToDoApp.Repository;
 using ToDoApp.Middleware;
-
+using Microsoft.AspNetCore.Http;
 
 namespace ToDoApp.Services
 {
@@ -19,10 +20,17 @@ namespace ToDoApp.Services
             _toDoRepository = toDoRepository;
         }
 
-        public IEnumerable<ToDoDto> GetAllToDos()
+        public IEnumerable<ToDoDto> GetAllToDos(HttpContext context)
         {
+            var currentUser = context.User;
+            var userAge = FindUserAge(currentUser);
             var toDoEntities = _toDoRepository.GetToDos();
             var results = Mapper.Map<IEnumerable<ToDoDto>>(toDoEntities);
+            
+            if (userAge < 14)
+            {
+                results = results.Where(t => t.SuitableForChild).ToArray();
+            }
             return results;
         }
 
@@ -63,6 +71,26 @@ namespace ToDoApp.Services
             {
                 throw new NotSavedException(500, "A problem happened while handling your request.");
             }
+        }
+
+        private int FindUserAge(ClaimsPrincipal currentUser)
+        {
+            var userAge = 0;
+            if (UserHasClaim(currentUser))
+            {
+                DateTime birthDate = DateTime.Parse(currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.DateOfBirth).Value);
+                userAge = DateTime.Today.Year - birthDate.Year;
+            }
+            return userAge;
+        }
+
+        private bool UserHasClaim(ClaimsPrincipal currentUser)
+        {
+            if (currentUser.HasClaim(c => c.Type == ClaimTypes.DateOfBirth))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

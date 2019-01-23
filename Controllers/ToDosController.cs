@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Security.Claims;
-using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using ToDoApp.Models;
-using ToDoApp.Repository;
 using ToDoApp.Validators;
 using ToDoApp.Services;
 
@@ -18,20 +15,18 @@ namespace ToDoApp.Controllers
     [Route("api/[controller]")]
     public class ToDosController : Controller
     {
-        private IToDoRepository _toDoRepository;
         private IToDoService _toDoService;
 
-        public ToDosController(IToDoRepository toDoRepository, IToDoService toDoService)
+        public ToDosController(IToDoService toDoService)
         {
-            _toDoRepository = toDoRepository;
             _toDoService = toDoService;
         }
 
         // GET api/todos
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult GetTodos()
         {
-           var toDos = _toDoService.GetAllToDos();        
+           var toDos = _toDoService.GetAllToDos(HttpContext);        
            return Ok(toDos);
         }
 
